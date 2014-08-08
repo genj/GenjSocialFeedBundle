@@ -1,0 +1,11 @@
+<ul>
+    {% for post in posts %}
+        <li>
+            <a href="http://twitter.com/{{ post.authorUsername }}" target="_blank">
+                <strong>@{{ post.authorUsername }}</strong>
+                <img src="{{ post.authorFile }}" alt=""/>
+            </a>
+            <p>{{ post.body|raw }}</p>
+        </li>
+    {% endfor %}
+</ul>

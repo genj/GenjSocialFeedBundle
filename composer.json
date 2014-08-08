@@ -1,0 +1,46 @@
+{
+    "name":        "genj/social-feed-bundle",
+    "type":        "symfony-bundle",
+    "description": "Symfony Social Feed bundle",
+    "keywords":    ["genj", "social", "feed", "symfony", "bundle"],
+    "homepage":    "http://github.com/Genj/SocialFeedBundle",
+    "license":     "MIT",
+
+    "authors": [
+        {
+            "name":  "Choong Wei Tjeng",
+            "email": "choong.wei.tjeng@genj.nl"
+        },
+        {
+            "name":  "Nico Kaag",
+            "email": "nico.kaag@genj.nl"
+        },
+        {
+            "name":  "Susan Lau",
+            "email": "susan.lau@genj.nl"
+        }
+    ],
+
+    "require": {
+        "symfony/symfony": "2.5.*",
+        "sensio/framework-extra-bundle": "~3.0",
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "doctrine/doctrine-bundle": "~1.2",
+        "doctrine/doctrine-fixtures-bundle": "~2.2",
+        "gedmo/doctrine-extensions": ">=2.3.9",
+        "vich/uploader-bundle": "~0",
+        "themattharris/tmhoauth": "*",
+        "facebook/php-sdk-v4" : "4.0.*",
+        "php-instagram-api/php-instagram-api": "dev-master"
+    },
+
+    "minimum-stability": "dev",
+
+    "autoload": {
+        "psr-0": {
+            "Genj\\SocialFeedBundle": ""
+        }
+    },
+
+    "target-dir": "Genj/SocialFeedBundle"
+}

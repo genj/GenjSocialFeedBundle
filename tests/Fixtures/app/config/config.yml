@@ -1,0 +1,34 @@
+imports:
+    - { resource: doctrine_extensions.yml }
+
+framework:
+    secret:          irrelevant
+    templating:      { engines: ['twig'] }
+    router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+    form:            true
+    csrf_protection: true
+    default_locale:  en
+    translator:      { fallback: en }
+    profiler:        { only_exceptions: false }
+    test: ~
+    session:
+        storage_id: session.storage.filesystem
+
+doctrine:
+    dbal:
+        connections:
+            default:
+                driver:   pdo_mysql
+                host:     127.0.0.1
+                port:     null
+                dbname:   bundle_test_genj_social_feed_bundle
+                user:     bundle_test
+                password: bundle_test
+                charset:  UTF8
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false

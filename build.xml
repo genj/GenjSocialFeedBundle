@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Set some basic project information and targets -->
+<project name="GenjSocialFeedBundle" default="build">
+
+    <target name="build" depends="prepare, lint, vendors, dbupdate, fixtures, phpunit, phpcs, phpdoc, pdepend, phpcb, phpcpd, phploc, phpmd"/>
+
+    <target name="clean" description="Cleanup build artifacts">
+        <delete dir="build/coverage"/>
+        <delete dir="build/logs"/>
+        <delete dir="build/api"/>
+        <delete dir="build/docs"/>
+        <delete dir="build/pdepend"/>
+    </target>
+
+    <target name="prepare" depends="clean" description="Prepare for build">
+        <mkdir dir="build/coverage"/>
+        <mkdir dir="build/logs"/>
+        <mkdir dir="build/api"/>
+        <mkdir dir="build/docs"/>
+        <mkdir dir="build/pdepend"/>
+    </target>
+
+    <target name="lint" depends="prepare" description="Perform syntax check of sourcecode files">
+        <phplint level="info">
+            <fileset dir=".">
+                <include name="**/*.php"/>
+                <exclude name="**/vendor/**"/>
+            </fileset>
+        </phplint>
+    </target>
+
+    <target name="vendors" depends="lint" description="Update vendors">
+        <exec executable="composer" checkreturn="true" passthru="true">
+            <arg line="update"/>
+        </exec>
+    </target>
+
+    <target name="dbupdate" depends="vendors" description="Update DB">
+        <exec executable="php" checkreturn="true" passthru="true">
+            <arg line="Tests/Fixtures/app/console"/>
+            <arg line="doctrine:schema:update"/>
+            <arg line="--force"/>
+        </exec>
+    </target>
+
+    <target name="fixtures" depends="dbupdate" description="Load fixtures">
+        <exec executable="php" checkreturn="true" passthru="true">
+            <arg line="Tests/Fixtures/app/console"/>
+            <arg line="doctrine:fixtures:load"/>
+            <arg line="--fixtures=Tests/Fixtures/Entity"/>
+            <arg line="--verbose"/>
+            <arg line="--no-interaction"/>
+        </exec>
+    </target>
+
+    <target name="phpunit">
+        <exec executable="phpunit" checkreturn="true" passthru="true">
+            <arg line="--verbose"/>
+        </exec>
+    </target>
+
+    <target name="phpcs" description="Run PHP_CodeSniffer">
+        <exec executable="phpcs" passthru="true">
+            <arg line="--ignore=vendor/*,build/*,Tests/Fixtures/*,.svn/*,.git/*"/>
+            <arg line="--report=checkstyle"/>
+            <arg line="--report-file=build/logs/checkstyle.xml"/>
+            <arg line="--standard=Symfony2"/>
+            <arg path="."/>
+        </exec>
+    </target>
+
+    <target name="phpdoc" description="Run phpDocumentor">
+        <exec executable="phpdoc" passthru="true">
+            <arg line="-i 'vendor/,build/,Tests/Fixtures/,.svn/,.git/'"/>
+            <arg line="-d '.'"/>
+            <arg line="-t 'build/docs'"/>
+        </exec>
+    </target>
+
+    <target name="pdepend" description="Run PHP_Depend">
+        <exec executable="pdepend" passthru="true">
+            <arg line="--ignore=vendor/*,build/*,Tests/Fixtures/*,.svn/*,.git/"/>
+            <arg line="--jdepend-xml=build/logs/jdepend.xml"/>
+            <arg line="--jdepend-chart=build/pdepend/dependencies.svg"/>
+            <arg line="--overview-pyramid=build/pdepend/overview-pyramid.svg"/>
+            <arg path="." />
+        </exec>
+    </target>
+
+    <target name="phpcb" description="Aggregate tool output with PHP_CodeBrowser">
+        <exec executable="phpcb" passthru="true">
+            <arg line="--ignore=vendor,build,Tests/Fixtures,.svn,.git"/>
+            <arg line="--log build/logs"/>
+            <arg line="--source ."/>
+            <arg line="--output build/code-browser"/>
+        </exec>
+    </target>
+
+    <target name="phpcpd" description="Find duplicate code using PHPCPD">
+        <exec executable="phpcpd" passthru="true">
+            <arg line="--exclude=vendor"/>
+            <arg line="--exclude=build"/>
+            <arg line="--exclude=Tests/Fixtures"/>
+            <arg line="--exclude=.svn"/>
+            <arg line="--exclude=.git"/>
+            <arg line="--log-pmd build/logs/pmd-cpd.xml"/>
+            <arg path="."/>
+        </exec>
+    </target>
+
+    <target name="phploc" description="Measure project size using PHPLOC">
+        <exec executable="phploc" passthru="true">
+            <arg line="--exclude=vendor"/>
+            <arg line="--exclude=build"/>
+            <arg line="--exclude=Tests/Fixtures"/>
+            <arg line="--exclude=.svn"/>
+            <arg line="--exclude=.git"/>
+            <arg line="--log-csv build/logs/phploc.csv"/>
+            <arg path="."/>
+        </exec>
+    </target>
+
+    <target name="phpmd" description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
+        <exec executable="phpmd" passthru="true">
+            <arg path="." />
+            <arg line="xml" />
+            <arg line="codesize,design,naming,unusedcode" />
+            <arg line="--reportfile build/logs/pmd.xml" />
+            <arg line="--exclude vendor,build,Tests/Fixtures,.svn,.git" />
+        </exec>
+    </target>
+</project>

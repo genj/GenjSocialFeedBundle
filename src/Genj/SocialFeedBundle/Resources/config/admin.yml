@@ -1,0 +1,12 @@
+parameters:
+    genj_social_feed.admin.social_feed_admin.class: Genj\SocialFeedBundle\Admin\SocialFeedAdmin
+
+services:
+    sonata.admin.genj_social_feed_post:
+        class: %genj_social_feed.admin.social_feed_admin.class%
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "content", label: "Social Posts" }
+        arguments:
+            - ~
+            - %genj_social_feed.entity.post.class%
+            - ~
