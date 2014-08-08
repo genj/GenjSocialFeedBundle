@@ -1,8 +1,8 @@
 {
     "name":        "genj/social-feed-bundle",
     "type":        "symfony-bundle",
-    "description": "Symfony Social Feed bundle",
-    "keywords":    ["genj", "social", "feed", "symfony", "bundle"],
+    "description": "collecting posts from all type of social feeds like twitter, instagram, facebook for multiple user accounts.",
+    "keywords":    ["genj", "social", "feed", "symfony2", "bundle"],
     "homepage":    "http://github.com/Genj/SocialFeedBundle",
     "license":     "MIT",
 
