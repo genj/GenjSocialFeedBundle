@@ -36,7 +36,16 @@ class PostFixture extends AbstractFixture implements OrderedFixtureInterface, Co
     {
         for ($ctr = 0; $ctr < 10; $ctr++) {
             $post = new Post();
-            $post->setHeadline('Laaglandwild Wisenten ' . $ctr);
+            $post->setHeadline('A very interesting social feed post  ' . $ctr);
+            $post->setProvider(array_rand(array('facebook', 'twitter', 'instagram')));
+            $post->setAuthorName('Author name');
+            $post->setAuthorUsername('Author username');
+            $post->setAuthorFile('author-file.jpg');
+            $post->setBody('Lorem ipsum dolor sit amet,
+consectetur adipiscing elit. Curabitur posuere orci eu mi fermentum pulvinar. Curabitur laoreet, mi ac dictum mattis.');
+            $post->setIsActive(true);
+            $post->setPostId('123abc' . $ctr);
+            $post->setPublishAt(new \DateTime());
 
             $manager->persist($post);
             $manager->flush();

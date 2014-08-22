@@ -3,7 +3,7 @@
     "type":        "symfony-bundle",
     "description": "collecting posts from all type of social feeds like twitter, instagram, facebook for multiple user accounts.",
     "keywords":    ["genj", "social", "feed", "symfony2", "bundle"],
-    "homepage":    "http://github.com/Genj/SocialFeedBundle",
+    "homepage":    "http://github.com/genj/GenjSocialFeedBundle",
     "license":     "MIT",
 
     "authors": [
@@ -38,9 +38,7 @@
 
     "autoload": {
         "psr-0": {
-            "Genj\\SocialFeedBundle": ""
+            "Genj\\SocialFeedBundle\\": "src/"
         }
-    },
-
-    "target-dir": "Genj/SocialFeedBundle"
+    }
 }
