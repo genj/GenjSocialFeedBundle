@@ -19,22 +19,14 @@ The GenjSocialFeedBundle. Features:
 
 ## Installation
 
-### SVN External
 
-Add this SVN Repo to your vendor/Genj external property:
-
-```
-http://svn.genj.nl/svn/intern/bundles/GenjSocialFeedBundle/trunk/ SocialFeedBundle
-```
-
-### Composer
-
-Add this to your composer.json:
+Add this bundle and the facebook/instagram/twitter libraries to your composer.json:
 
 ```
     ...
     "require": {
         ...
+        "genj/social-feed-bundle": "dev-master",
         "themattharris/tmhoauth": "*",
         "facebook/php-sdk-v4" : "4.0.*",
         "php-instagram-api/php-instagram-api": "dev-master"
