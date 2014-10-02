@@ -5,21 +5,23 @@ namespace Genj\SocialFeedBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * Class ArticleController
+ * Class SocialFeedController
  *
- * @package Genj\ArticleBundle\Controller
+ * @package Genj\SocialFeedBundle\Controller
  */
 class SocialFeedController extends Controller
 {
     /**
-     * @param string $slug
+     * @param int    $max
+     * @param string $provider
+     * @param array  $authorUsernames
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction($max = 5, $provider = null)
+    public function showAction($max = 5, $provider = null, $authorUsernames = array())
     {
-        $posts = $this->getPostRepository()->retrieveMostRecentPublicPosts($max, $provider)->getResult();
+        $posts = $this->getPostRepository()->retrieveMostRecentPublicPosts($max, $provider, $authorUsernames);
 
         return $this->render(
             'GenjSocialFeedBundle:Feed:show.html.twig',
@@ -28,7 +30,7 @@ class SocialFeedController extends Controller
     }
 
     /**
-     * @return \Genj\ArticleBundle\Entity\ArticleRepository
+     * @return \Genj\SocialFeedBundle\Entity\PostRepository
      */
     protected function getPostRepository()
     {

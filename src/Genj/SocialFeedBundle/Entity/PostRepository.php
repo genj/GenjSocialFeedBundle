@@ -13,11 +13,13 @@ use Doctrine\ORM\EntityRepository;
 class PostRepository extends EntityRepository
 {
     /**
-     * @param int $max
+     * @param int    $max
+     * @param string $provider
+     * @param array  $authorUsernames
      *
      * @return \Doctrine\ORM\Query
      */
-    public function retrieveMostRecentPublicPosts($max = 5, $provider = null)
+    public function retrieveMostRecentPublicPosts($max = 5, $provider = null, $authorUsernames = array())
     {
         $query = $this->createQueryBuilder('a')
             ->where('a.isActive = :isActive')
@@ -29,13 +31,16 @@ class PostRepository extends EntityRepository
             $query->setParameter('provider', $provider);
         }
 
-        $query = $query->getQuery();
+        if ($authorUsernames && is_array($authorUsernames) && count($authorUsernames) > 0) {
+            $query->andWhere('a.authorUsername IN(:authorUsernames)');
+            $query->setParameter('authorUsernames', $authorUsernames);
+        }
 
         $query->setParameter('isActive', true);
         $query->setParameter('publishAt', date('Y-m-d H:i:s'));
 
         $query->setMaxResults($max);
 
-        return $query;
+        return $query->getQuery()->execute();
     }
 }
