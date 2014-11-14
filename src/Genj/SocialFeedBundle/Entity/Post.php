@@ -5,6 +5,9 @@ namespace Genj\SocialFeedBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping\UniqueConstraint;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Post
@@ -17,6 +20,9 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
  *          @ORM\Index(name="provider_postId", columns={"provider", "post_id"})
  *      }
  * )
+ *
+ * @Vich\Uploadable
+ *
  * @ORM\Entity(repositoryClass="Genj\SocialFeedBundle\Entity\PostRepository")
  */
 class Post
@@ -51,6 +57,12 @@ class Post
     protected $authorName;
 
     /**
+     * @Assert\Image(maxSize="2M")
+     * @Vich\UploadableField(mapping="genj_socialfeed_post_author_file", fileNameProperty="authorFile", nullable=true)
+     */
+    protected $authorFileUpload;
+
+    /**
      * @ORM\Column(name="author_file", type="string", length=255)
      */
     protected $authorFile;
@@ -64,6 +76,12 @@ class Post
      * @ORM\Column(type="text", nullable=true, options={"comment" = "HTML version of the Post"})
      */
     protected $body;
+
+    /**
+     * @Assert\Image(maxSize="2M")
+     * @Vich\UploadableField(mapping="genj_socialfeed_post_file", fileNameProperty="file", nullable=true)
+     */
+    protected $fileUpload;
 
     /**
      * @ORM\Column(type="string", nullable=true, length=255, options={"comment" = "Url to the avatar of the poser"})
@@ -129,6 +147,11 @@ class Post
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    public function getSlug()
+    {
+        return posix_getuid();
     }
 
     /**
@@ -244,6 +267,22 @@ class Post
     public function getFile()
     {
         return $this->file;
+    }
+
+    /**
+     * @param File|null $fileUpload
+     */
+    public function setFileUpload($fileUpload)
+    {
+        $this->fileUpload = $fileUpload;
+    }
+
+    /**
+     * @return File
+     */
+    public function getFileUpload()
+    {
+        return $this->fileUpload;
     }
 
     /**
@@ -382,6 +421,22 @@ class Post
     public function getAuthorFile()
     {
         return $this->authorFile;
+    }
+
+    /**
+     * @param File|null $authorFileUpload
+     */
+    public function setAuthorFileUpload($authorFileUpload)
+    {
+        $this->authorFileUpload = $authorFileUpload;
+    }
+
+    /**
+     * @return File
+     */
+    public function getAuthorFileUpload()
+    {
+        return $this->authorFileUpload;
     }
 
     /**

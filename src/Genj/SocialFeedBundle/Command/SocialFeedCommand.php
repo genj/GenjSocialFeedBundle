@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 class SocialFeedCommand extends Command {
@@ -88,6 +89,14 @@ class SocialFeedCommand extends Command {
             if (!$post) {
 
                 if ($socialPost) {
+                    if (!empty($socialPost->getFile())) {
+                        $socialPost->setFileUpload($this->getUploadedFileFromUrl($socialPost->getFile()));
+                    }
+
+                    if (!empty($socialPost->getAuthorFile())) {
+                        $socialPost->setAuthorFileUpload($this->getUploadedFileFromUrl($socialPost->getAuthorFile()));
+                    }
+
                     $entityManager->persist($socialPost);
                     $newPostCount++;
                 }
@@ -96,5 +105,14 @@ class SocialFeedCommand extends Command {
         $this->output->writeln('New '. $provider .' posts added for '. $username .': '. $newPostCount);
 
         $entityManager->flush();
+    }
+
+    protected function getUploadedFileFromUrl($url)
+    {
+        $storageFile = tempnam(sys_get_temp_dir(), 'GenjSocialFeedBundle');
+
+        file_put_contents($storageFile, file_get_contents($url));
+
+        return new UploadedFile($storageFile, 'SocialPost', null, null, null, true);
     }
 }

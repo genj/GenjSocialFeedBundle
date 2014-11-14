@@ -69,6 +69,24 @@ app/console config:dump-reference GenjSocialFeedBundle
 
 Add the needed configuration to your config.yml
 
+```
+...
+vich_uploader:
+    ...
+    mappings:
+        ...
+        genj_socialfeed_post_file:
+            uri_prefix:         /uploads/genjsocialfeedpost
+            upload_destination: %kernel.root_dir%/../web/uploads/genjsocialfeedpost
+            namer:              vich_uploader.namer_origname
+            inject_on_load:     true
+        genj_socialfeed_post_author_file:
+            uri_prefix:         /uploads/genjsocialfeedpostauthor
+            upload_destination: %kernel.root_dir%/../web/uploads/genjsocialfeedpostauthor
+            namer:              vich_uploader.namer_origname
+            inject_on_load:     true
+```
+
 ## Run feed scraper task
 
 ```
