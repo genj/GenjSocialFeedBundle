@@ -149,9 +149,14 @@ class Post
         return $this->createdAt;
     }
 
+    /**
+     * Creates a slug for the post entity to enable thumbnailing, and other bundles that require entities to have a slug
+     *
+     * @return string
+     */
     public function getSlug()
     {
-        return posix_getuid();
+        return $this->provider .'-'. $this->postId;
     }
 
     /**
