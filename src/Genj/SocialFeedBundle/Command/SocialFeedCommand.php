@@ -89,12 +89,14 @@ class SocialFeedCommand extends Command {
             if (!$post) {
 
                 if ($socialPost) {
-                    if (!empty($socialPost->getFile())) {
-                        $socialPost->setFileUpload($this->getUploadedFileFromUrl($socialPost->getFile()));
+                    $socialPostFile = $socialPost->getFile();
+                    if (!empty($socialPostFile)) {
+                        $socialPost->setFileUpload($this->getUploadedFileFromUrl($socialPostFile));
                     }
 
-                    if (!empty($socialPost->getAuthorFile())) {
-                        $socialPost->setAuthorFileUpload($this->getUploadedFileFromUrl($socialPost->getAuthorFile()));
+                    $socialPostAuthorFile = $socialPost->getAuthorFile();
+                    if (!empty($socialPostAuthorFile)) {
+                        $socialPost->setAuthorFileUpload($this->getUploadedFileFromUrl($socialPostAuthorFile));
                     }
 
                     $entityManager->persist($socialPost);

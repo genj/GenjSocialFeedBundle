@@ -62,12 +62,16 @@ php app/console doctrine:schema:update --force
 
 ## Configuration
 
+Copy the social_feed.yml.dist to app/config/social_feed.yml
+Add all the needed configurations.
+Remove the providers that you don't need.
+
 Check all Possible configuration by dumping the config
 ```
 app/console config:dump-reference GenjSocialFeedBundle
 ```
 
-Add the needed configuration to your config.yml
+Add the needed vich mapping configuration to your config.yml
 
 ```
 ...
