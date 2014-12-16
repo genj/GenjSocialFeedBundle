@@ -71,25 +71,67 @@ Check all Possible configuration by dumping the config
 app/console config:dump-reference GenjSocialFeedBundle
 ```
 
-Add the needed vich mapping configuration to your config.yml
+Add your basic API tokens to your parameters.yml by adding this to your parameters.yml.dist
+
+    genj_social_feed.twitter.consumer_key: null
+    genj_social_feed.twitter.consumer_secret: null
+    genj_social_feed.twitter.user_token: null
+    genj_social_feed.twitter.user_secret: null
+
+    genj_social_feed.facebook.app_id: null
+    genj_social_feed.facebook.app_secret: null
+    genj_social_feed.facebook.client_token: null
+
+    genj_social_feed.instagram.client_id: null
+
+and then run the install command of composer
 
 ```
-...
-vich_uploader:
-    ...
-    mappings:
-        ...
-        genj_socialfeed_post_file:
-            uri_prefix:         /uploads/genjsocialfeedpost
-            upload_destination: %kernel.root_dir%/../web/uploads/genjsocialfeedpost
-            namer:              vich_uploader.namer_origname
-            inject_on_load:     true
-        genj_socialfeed_post_author_file:
-            uri_prefix:         /uploads/genjsocialfeedpostauthor
-            upload_destination: %kernel.root_dir%/../web/uploads/genjsocialfeedpostauthor
-            namer:              vich_uploader.namer_origname
-            inject_on_load:     true
+php composer.phar install
 ```
+
+Your config.yml will look like this: (Leave out the providers that you don't use)
+
+
+    genj_social_feed:
+        oAuth:
+            twitter:
+                consumer_key:    %genj_social_feed.twitter.consumer_key%
+                consumer_secret: %genj_social_feed.twitter.consumer_secret%
+                user_token:      %genj_social_feed.twitter.user_token%
+                user_secret:     %genj_social_feed.twitter.user_secret%
+            facebook:
+                app_id:          %genj_social_feed.facebook.app_id%
+                app_secret:      %genj_social_feed.facebook.app_secret%
+                client_token:    %genj_social_feed.facebook.client_token%
+            instagram:
+                client_id:       %genj_social_feed.instagram.client_id%
+        feed_users:
+            twitter:
+                - nicokaag
+            facebook:
+                - nicokaag
+            instagram:
+                - nicokaag
+
+
+Add the needed vich mapping configuration to your config.yml
+
+    ...
+    vich_uploader:
+        ...
+        mappings:
+            ...
+            genj_socialfeed_post_file:
+                uri_prefix:         /uploads/genjsocialfeedpost
+                upload_destination: %kernel.root_dir%/../web/uploads/genjsocialfeedpost
+                namer:              vich_uploader.namer_origname
+                inject_on_load:     true
+            genj_socialfeed_post_author_file:
+                uri_prefix:         /uploads/genjsocialfeedpostauthor
+                upload_destination: %kernel.root_dir%/../web/uploads/genjsocialfeedpostauthor
+                namer:              vich_uploader.namer_origname
+                inject_on_load:     true
 
 ## Run feed scraper task
 
