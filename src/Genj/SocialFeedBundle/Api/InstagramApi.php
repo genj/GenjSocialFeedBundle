@@ -58,9 +58,9 @@ class InstagramApi extends SocialApi
         $post->setAuthorUsername($socialPost->user->username);
         $post->setAuthorName($socialPost->user->full_name);
         $post->setAuthorFile($socialPost->user->profile_picture);
+        $post->setHeadline(strip_tags($socialPost->caption->text));
 
         $text = $this->getFormattedTextFromPost($socialPost);
-        $post->setHeadline($text);
         $post->setBody($text);
         $post->setFile($socialPost->images->standard_resolution->url);
         $post->setLink($socialPost->link);

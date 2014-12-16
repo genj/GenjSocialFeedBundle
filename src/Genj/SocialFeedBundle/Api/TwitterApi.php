@@ -59,7 +59,7 @@ class TwitterApi extends SocialApi
         $post->setAuthorFile($socialPost['user']['profile_image_url']);
 
         $text = $this->getFormattedTextFromPost($socialPost);
-        $post->setHeadline($text);
+        $post->setHeadline(strip_tags($socialPost['text']));
         $post->setBody($text);
 
         if (isset($socialPost['entities']['media'][0])) {

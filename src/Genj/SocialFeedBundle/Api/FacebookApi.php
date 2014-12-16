@@ -67,9 +67,9 @@ class FacebookApi extends SocialApi
         $post->setAuthorUsername($userDetails->username);
         $post->setAuthorName($socialPost->from->name);
         $post->setAuthorFile('https://graph.facebook.com/'. $socialPost->from->id .'/picture');
+        $post->setHeadline(strip_tags($socialPost->message));
 
         $message = $this->getFormattedTextFromPost($socialPost);
-        $post->setHeadline($message);
         $post->setBody($message);
 
         if (isset($socialPost->picture) && !empty($socialPost->picture)) {
