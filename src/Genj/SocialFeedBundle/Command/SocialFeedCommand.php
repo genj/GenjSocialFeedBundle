@@ -113,7 +113,13 @@ class SocialFeedCommand extends Command {
     {
         $storageFile = tempnam(sys_get_temp_dir(), 'GenjSocialFeedBundle');
 
-        file_put_contents($storageFile, file_get_contents($url));
+        $fileContents = @file_get_contents($url);
+
+        if (!$fileContents) {
+            return null;
+        }
+
+        file_put_contents($storageFile, $fileContents);
 
         return new UploadedFile($storageFile, 'SocialPost', null, null, null, true);
     }
