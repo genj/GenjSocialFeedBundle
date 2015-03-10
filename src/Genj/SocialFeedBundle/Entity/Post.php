@@ -57,7 +57,7 @@ class Post
     protected $authorName;
 
     /**
-     * @Assert\Image(maxSize="2M")
+     * @Assert\Image(maxSize="10M")
      * @Vich\UploadableField(mapping="genj_socialfeed_post_author_file", fileNameProperty="authorFile", nullable=true)
      */
     protected $authorFileUpload;
@@ -78,7 +78,7 @@ class Post
     protected $body;
 
     /**
-     * @Assert\Image(maxSize="2M")
+     * @Assert\Image(maxSize="10M")
      * @Vich\UploadableField(mapping="genj_socialfeed_post_file", fileNameProperty="file", nullable=true)
      */
     protected $fileUpload;
