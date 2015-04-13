@@ -2,7 +2,10 @@
 
 namespace Genj\SocialFeedBundle\Controller;
 
+use Genj\SocialFeedBundle\Entity\Post;
+use Genj\ThumbnailBundle\Twig\ThumbnailExtension;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class SocialFeedController
@@ -28,6 +31,46 @@ class SocialFeedController extends Controller
             array('posts' => $posts)
         );
     }
+
+    /**
+     * @param int    $max
+     * @param string $provider
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getPostsAction($max = 5, $provider = null)
+    {
+        $posts = $this->getPostRepository()->retrieveMostRecentPublicPosts($max, $provider);
+
+        /** @var ThumbnailExtension $thumbnailService */
+        $thumbnailService = $this->get('genj_thumbnail.twig.thumbnail_extension');
+
+        $postList = array();
+
+        /** @var Post $post */
+        foreach ($posts as $post) {
+            $postData = array(
+                'provider' => $post->getProvider(),
+                'postId'   => $post->getPostId(),
+                'author' => array(
+                    'username' => $post->getAuthorUsername(),
+                    'name'     => $post->getAuthorName(),
+                    'avatar'   => (string) $thumbnailService->getThumbnailPath($post, 'authorFileUpload', 'teaser')
+                ),
+                'body'      => $post->getHeadline(),
+                'image'     => (string) $thumbnailService->getThumbnailPath($post, 'fileUpload', 'teaser'),
+                'link'      => $post->getLink(),
+                'publishAt' => $post->getPublishAt()->format('Y-m-d H:i:s')
+            );
+
+            $postList[] = $postData;
+        }
+
+        return new JsonResponse(array('posts' => $postList));
+    }
+
+
 
     /**
      * @return \Genj\SocialFeedBundle\Entity\PostRepository

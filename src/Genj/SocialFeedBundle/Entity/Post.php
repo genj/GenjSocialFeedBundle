@@ -156,7 +156,7 @@ class Post
      */
     public function getSlug()
     {
-        return $this->provider .'-'. $this->postId;
+        return $this->provider .'-'. str_replace('_', '-', $this->postId);
     }
 
     /**

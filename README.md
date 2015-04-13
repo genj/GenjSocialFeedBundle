@@ -26,10 +26,7 @@ Add this bundle and the facebook/instagram/twitter libraries to your composer.js
     ...
     "require": {
         ...
-        "genj/social-feed-bundle": "dev-master",
-        "themattharris/tmhoauth": "*",
-        "facebook/php-sdk-v4" : "4.0.*",
-        "php-instagram-api/php-instagram-api": "dev-master"
+        "genj/social-feed-bundle": "dev-master"
         ...
 ```
 
@@ -132,6 +129,19 @@ Add the needed vich mapping configuration to your config.yml
                 upload_destination: %kernel.root_dir%/../web/uploads/genjsocialfeedpostauthor
                 namer:              vich_uploader.namer_origname
                 inject_on_load:     true
+
+If you want to make use of the JSON api call to get the social posts, add the following routing:
+
+    genj_social_feed_posts_get:
+        pattern:  /api/social-feed/posts
+        defaults:
+            _controller: GenjSocialFeedBundle:SocialFeed:getPosts
+            _format: ~
+            max: 5
+            provider: ""
+        requirements:
+            _method: GET
+            max: '^\d+$'
 
 ## Run feed scraper task
 

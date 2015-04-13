@@ -16,13 +16,17 @@ class InstagramApi extends SocialApi
 {
     protected $providerName = 'instagram';
 
+    protected $config = array();
+
     /**
      * @param array $oAuthConfig
      */
     public function __construct($oAuthConfig)
     {
-        $this->api = new Instagram;
+        $this->api = new Instagram();
         $this->api->setClientID($oAuthConfig['instagram']['client_id']);
+
+        $this->config = $oAuthConfig;
     }
 
     /**
