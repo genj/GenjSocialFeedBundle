@@ -6,6 +6,7 @@ use Genj\SocialFeedBundle\Entity\Post;
 use Genj\ThumbnailBundle\Twig\ThumbnailExtension;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class SocialFeedController
@@ -33,13 +34,14 @@ class SocialFeedController extends Controller
     }
 
     /**
-     * @param int    $max
-     * @param string $provider
+     * @param Request $request
+     * @param int     $max
+     * @param string  $provider
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getPostsAction($max = 5, $provider = null)
+    public function getPostsAction(Request $request, $max = 5, $provider = null)
     {
         $posts = $this->getPostRepository()->retrieveMostRecentPublicPosts($max, $provider);
 
@@ -67,7 +69,14 @@ class SocialFeedController extends Controller
             $postList[] = $postData;
         }
 
-        return new JsonResponse(array('posts' => $postList));
+        $response = new JsonResponse(array('posts' => $postList), 200, array());
+
+        $callback = $request->get('callback', false);
+        if ($callback) {
+            $response->setCallback($callback);
+        }
+
+        return $response;
     }
 
 
