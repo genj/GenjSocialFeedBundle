@@ -86,6 +86,7 @@ class SocialFeedCommand extends Command {
 
         foreach ($socialPosts as $socialPost) {
             $post = $postRepository->findOneBy(array('provider' => $provider, 'postId' => $socialPost->getPostId()));
+
             if (!$post) {
 
                 if ($socialPost) {
@@ -100,13 +101,13 @@ class SocialFeedCommand extends Command {
                     }
 
                     $entityManager->persist($socialPost);
+                    $entityManager->flush();
                     $newPostCount++;
                 }
             }
         }
-        $this->output->writeln('New '. $provider .' posts added for '. $username .': '. $newPostCount);
 
-        $entityManager->flush();
+        $this->output->writeln('New '. $provider .' posts added for '. $username .': '. $newPostCount);
     }
 
     protected function getUploadedFileFromUrl($url)
