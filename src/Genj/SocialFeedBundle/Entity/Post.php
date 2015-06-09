@@ -280,6 +280,10 @@ class Post
     public function setFileUpload($fileUpload)
     {
         $this->fileUpload = $fileUpload;
+
+        if ($this->fileUpload) {
+            $this->updatedAt = new \DateTime('now');
+        }
     }
 
     /**
@@ -434,6 +438,10 @@ class Post
     public function setAuthorFileUpload($authorFileUpload)
     {
         $this->authorFileUpload = $authorFileUpload;
+
+        if ($this->authorFileUpload) {
+            $this->updatedAt = new \DateTime('now');
+        }
     }
 
     /**
