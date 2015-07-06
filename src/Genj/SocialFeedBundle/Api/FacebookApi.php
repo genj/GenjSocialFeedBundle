@@ -51,7 +51,7 @@ class FacebookApi extends SocialApi
      *
      * @return Post
      */
-    protected function getMappedPostObject($socialPost, $username)
+    protected function getMappedPostObject($socialPost)
     {
         $post = new Post();
 
