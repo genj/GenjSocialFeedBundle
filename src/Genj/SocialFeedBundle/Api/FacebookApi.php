@@ -51,7 +51,7 @@ class FacebookApi extends SocialApi
      *
      * @return Post
      */
-    protected function getMappedPostObject($socialPost)
+    protected function getMappedPostObject($socialPost, $username)
     {
         $post = new Post();
 
@@ -62,9 +62,14 @@ class FacebookApi extends SocialApi
         $post->setProvider($this->providerName);
         $post->setPostId($socialPost->id);
 
-        $userDetails = json_decode(file_get_contents("https://graph.facebook.com/". $socialPost->from->id));
+        $rawUserDetails = $this->requestGet("/". $socialPost->from->id);
+        $userDetails = $rawUserDetails->asArray();
 
-        $post->setAuthorUsername($userDetails->username);
+        if (empty($userDetails)) {
+            return false;
+        }
+
+        $post->setAuthorUsername($userDetails['username']);
         $post->setAuthorName($socialPost->from->name);
         $post->setAuthorFile('https://graph.facebook.com/'. $socialPost->from->id .'/picture');
         $post->setHeadline(strip_tags($socialPost->message));
@@ -78,9 +83,11 @@ class FacebookApi extends SocialApi
 
             // If there is an object_id, then the original file may be available, so check for that one
             if (isset($socialPost->object_id)) {
-                $imageDetails = json_decode(file_get_contents("https://graph.facebook.com/". $socialPost->object_id));
-                if (isset($imageDetails->images[0]->source)) {
-                    $post->setFile($imageDetails->images[0]->source);
+                $rawImageDetails = $this->requestGet("/". $socialPost->object_id);
+                $imageDetails = $rawImageDetails->asArray();
+
+                if (isset($imageDetails['images'][0]->source)) {
+                    $post->setFile($imageDetails['images'][0]->source);
                 }
             } else {
                 // Check if it is an external image, if so, use the original one.
