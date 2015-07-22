@@ -3,7 +3,6 @@
 namespace Genj\SocialFeedBundle\Api;
 
 use Genj\SocialFeedBundle\Entity\Post;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Facebook\FacebookSession;
 use Facebook\Entities\AccessToken;
 use Facebook\FacebookRequest;
@@ -36,7 +35,9 @@ class FacebookApi extends SocialApi
     public function getUserPosts($username)
     {
         try {
-            $data = $this->requestGet('/'. $username .'/posts');
+            $parameters = array('fields' => 'message,link,from,picture,created_time,object_id');
+            $data = $this->requestGet('/'. $username .'/posts', $parameters);
+
         } catch (\Exception $ex) {
             echo $ex->getMessage();
 
@@ -62,7 +63,9 @@ class FacebookApi extends SocialApi
         $post->setProvider($this->providerName);
         $post->setPostId($socialPost->id);
 
-        $rawUserDetails = $this->requestGet("/". $socialPost->from->id);
+        $parameters = array('fields' => 'username');
+        $rawUserDetails = $this->requestGet("/". $socialPost->from->id, $parameters);
+
         $userDetails = $rawUserDetails->asArray();
 
         if (empty($userDetails)) {
@@ -83,7 +86,7 @@ class FacebookApi extends SocialApi
 
             // If there is an object_id, then the original file may be available, so check for that one
             if (isset($socialPost->object_id)) {
-                $rawImageDetails = $this->requestGet("/". $socialPost->object_id);
+                $rawImageDetails = $this->requestGet("/". $socialPost->object_id, array('fields' => 'images'));
                 $imageDetails = $rawImageDetails->asArray();
 
                 if (isset($imageDetails['images'][0]->source)) {
@@ -126,7 +129,7 @@ class FacebookApi extends SocialApi
     protected function requestGet($method, $parameters = array())
     {
         try {
-            $response = (new FacebookRequest($this->api, 'GET', $method, $parameters))->execute();
+            $response = (new FacebookRequest($this->api, 'GET', $method, $parameters, 'v2.4'))->execute();
 
             return $response->getGraphObject();
         } catch (\Exception $ex) {

@@ -41,10 +41,12 @@ abstract class SocialApi
         $postObjectList = array();
 
         foreach ($socialPosts as $socialPost) {
-            $postObject = $this->getMappedPostObject($socialPost);
-            if (is_array($postObject) || is_object($postObject)) {
-                $postObjectList[] = $postObject;
-            }
+            try {
+                $postObject = $this->getMappedPostObject($socialPost);
+                if (is_array($postObject) || is_object($postObject)) {
+                    $postObjectList[] = $postObject;
+                }
+            } catch (\Exception $e) { }
         }
 
         return $postObjectList;
