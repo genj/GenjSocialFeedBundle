@@ -35,7 +35,7 @@ class FacebookApi extends SocialApi
     public function getUserPosts($username)
     {
         try {
-            $parameters = array('fields' => 'message,link,from,picture,created_time,object_id');
+            $parameters = array('fields' => 'message,link,from,full_picture,created_time,object_id');
             $data = $this->requestGet('/'. $username .'/posts', $parameters);
 
         } catch (\Exception $ex) {
@@ -80,9 +80,9 @@ class FacebookApi extends SocialApi
         $message = $this->getFormattedTextFromPost($socialPost);
         $post->setBody($message);
 
-        if (isset($socialPost->picture) && !empty($socialPost->picture)) {
+        if (isset($socialPost->full_picture) && !empty($socialPost->full_picture)) {
             // A picture is set, use the original url as a backup
-            $post->setFile($socialPost->picture);
+            $post->setFile($socialPost->full_picture);
 
             // If there is an object_id, then the original file may be available, so check for that one
             if (isset($socialPost->object_id)) {
@@ -94,7 +94,7 @@ class FacebookApi extends SocialApi
                 }
             } else {
                 // Check if it is an external image, if so, use the original one.
-                $pictureUrlData = parse_url($socialPost->picture);
+                $pictureUrlData = parse_url($socialPost->full_picture);
                 if (preg_match('#^fbexternal#', $pictureUrlData['host']) === 1) {
                     parse_str($pictureUrlData['query'], $pictureUrlQueryData);
                     if (isset($pictureUrlQueryData['url'])) {
