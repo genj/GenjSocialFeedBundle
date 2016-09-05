@@ -19,17 +19,23 @@ class SocialFeedController extends Controller
      * @param int    $max
      * @param string $provider
      * @param array  $authorUsernames
+     * @param string $style
+     * @param string $source
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction($max = 5, $provider = null, $authorUsernames = array())
+    public function showAction($max = 5, $provider = null, $authorUsernames = array(), $style = null, $source = null)
     {
         $posts = $this->getPostRepository()->retrieveMostRecentPublicPosts($max, $provider, $authorUsernames);
 
         return $this->render(
             'GenjSocialFeedBundle:Feed:show.html.twig',
-            array('posts' => $posts)
+            array(
+                'posts'  => $posts,
+                'style'  => $style,
+                'source' => $source
+            )
         );
     }
 

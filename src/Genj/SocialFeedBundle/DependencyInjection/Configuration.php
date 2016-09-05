@@ -47,6 +47,7 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->scalarNode('client_id')->isRequired()->end()
+                                ->scalarNode('access_token')->isRequired()->end()
                             ->end()
                         ->end()
                     ->end()

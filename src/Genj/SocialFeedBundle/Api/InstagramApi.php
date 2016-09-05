@@ -25,6 +25,7 @@ class InstagramApi extends SocialApi
     {
         $this->api = new Instagram();
         $this->api->setClientID($oAuthConfig['instagram']['client_id']);
+        $this->api->setAccessToken($oAuthConfig['instagram']['access_token']);
 
         $this->config = $oAuthConfig;
     }
