@@ -28,7 +28,7 @@
         "doctrine/doctrine-bundle": "~1.2",
         "doctrine/doctrine-fixtures-bundle": "~2.2",
         "gedmo/doctrine-extensions": ">=2.3.9",
-        "vich/uploader-bundle": "~1",
+        "vich/uploader-bundle": "~0|~1",
         "themattharris/tmhoauth": "*",
         "facebook/php-sdk-v4" : "4.0.*",
         "php-instagram-api/php-instagram-api": "dev-master"
