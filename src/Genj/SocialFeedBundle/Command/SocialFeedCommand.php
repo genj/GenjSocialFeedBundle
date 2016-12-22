@@ -108,6 +108,7 @@ class SocialFeedCommand extends Command {
         }
 
         $this->output->writeln('New '. $provider .' posts added for '. $username .': '. $newPostCount);
+        $this->output->writeln('success');
     }
 
     protected function getUploadedFileFromUrl($url)
