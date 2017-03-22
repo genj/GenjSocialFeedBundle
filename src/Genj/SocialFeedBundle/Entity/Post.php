@@ -42,17 +42,17 @@ class Post
     protected $provider;
 
     /**
-     * @ORM\Column(name="post_id", type="string", length=40)
+     * @ORM\Column(type="string", length=40)
      */
     protected $postId;
 
     /**
-     * @ORM\Column(name="author_username", type="string", length=20)
+     * @ORM\Column(type="string", length=20)
      */
     protected $authorUsername;
 
     /**
-     * @ORM\Column(name="author_name", type="string", length=20)
+     * @ORM\Column(type="string", length=20)
      */
     protected $authorName;
 
@@ -63,7 +63,7 @@ class Post
     protected $authorFileUpload;
 
     /**
-     * @ORM\Column(name="author_file", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     protected $authorFile;
 
@@ -94,24 +94,24 @@ class Post
     protected $link;
 
     /**
-     * @ORM\Column(name="publish_at", type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $publishAt;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $isActive;
 
     /**
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $createdAt;
 
     /**
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $updatedAt;
 
