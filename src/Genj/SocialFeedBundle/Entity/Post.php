@@ -79,7 +79,7 @@ class Post
 
     /**
      * @Assert\Image(maxSize="10M")
-     * @Vich\UploadableField(mapping="genj_socialfeed_post_file", fileNameProperty="file", nullable=true)
+     * @Vich\UploadableField(mapping="genj_socialfeed_post_file", fileNameProperty="file")
      */
     protected $fileUpload;
 
