@@ -58,7 +58,7 @@ class Post
 
     /**
      * @Assert\Image(maxSize="10M")
-     * @Vich\UploadableField(mapping="genj_socialfeed_post_author_file", fileNameProperty="authorFile", nullable=true)
+     * @Vich\UploadableField(mapping="genj_socialfeed_post_author_file", fileNameProperty="authorFile")
      */
     protected $authorFileUpload;
 
@@ -119,7 +119,7 @@ class Post
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -142,7 +142,7 @@ class Post
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -175,7 +175,7 @@ class Post
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -198,7 +198,7 @@ class Post
     /**
      * Get provider
      *
-     * @return string 
+     * @return string
      */
     public function getProvider()
     {
@@ -221,7 +221,7 @@ class Post
     /**
      * Get headline
      *
-     * @return string 
+     * @return string
      */
     public function getHeadline()
     {
@@ -244,7 +244,7 @@ class Post
     /**
      * Get body
      *
-     * @return string 
+     * @return string
      */
     public function getBody()
     {
@@ -267,7 +267,7 @@ class Post
     /**
      * Get file
      *
-     * @return string 
+     * @return string
      */
     public function getFile()
     {
@@ -310,7 +310,7 @@ class Post
     /**
      * Get publishAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getPublishAt()
     {
@@ -333,7 +333,7 @@ class Post
     /**
      * Get isActive
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsActive()
     {
@@ -356,7 +356,7 @@ class Post
     /**
      * Get postId
      *
-     * @return integer 
+     * @return integer
      */
     public function getPostId()
     {
@@ -379,7 +379,7 @@ class Post
     /**
      * Get authorUsername
      *
-     * @return string 
+     * @return string
      */
     public function getAuthorUsername()
     {
@@ -402,7 +402,7 @@ class Post
     /**
      * Get authorName
      *
-     * @return string 
+     * @return string
      */
     public function getAuthorName()
     {
@@ -425,7 +425,7 @@ class Post
     /**
      * Get authorFile
      *
-     * @return string 
+     * @return string
      */
     public function getAuthorFile()
     {
@@ -468,7 +468,7 @@ class Post
     /**
      * Get link
      *
-     * @return string 
+     * @return string
      */
     public function getLink()
     {
